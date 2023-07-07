@@ -1,10 +1,16 @@
 package com.foodexpress.alimento.models;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -22,6 +28,13 @@ public class Restaurant {
 	private String rAddress;
 	@Column(name="rMobile" , nullable = false)
 	private int rMobileNo;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Order> orders;
+	
+	@ManyToOne
+	@JoinColumn(name="FoodItemsId",referencedColumnName="fId")
+	private FoodItems foodItems;
 	
 	public Restaurant() {
 		this.rAddress= rAddress;

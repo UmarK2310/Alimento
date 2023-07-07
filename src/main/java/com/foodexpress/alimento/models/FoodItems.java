@@ -1,10 +1,13 @@
 package com.foodexpress.alimento.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,13 +23,20 @@ public class FoodItems {
 	@Column(nullable=false)
 	private float fPrice;
 	
-	/*private enum fCategory{
+	private enum fCategory{
 		Veg,
-		NonVeg
+		NonVeg,
+		Egg
 	}
-	*/
+	
 	@Column(nullable=false)
 	private String fCategory;
+	
+	@OneToMany
+	private List<Order> order;
+	
+	@OneToMany(mappedBy = "foodItems")
+	private List<Restaurant> restaurant;
 
 	public int getfId() {
 		return fId;
