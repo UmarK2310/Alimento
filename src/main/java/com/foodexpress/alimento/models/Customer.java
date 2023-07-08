@@ -105,8 +105,8 @@ import javax.persistence.Table;
 
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", emailId=" + emailId
-				+ ", address=" + address + ", mobilenumber=" + mobilenumber +"]";
+		return "Customer id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", emailId=" + emailId
+				+ ", address=" + address + ", mobilenumber=" + mobilenumber;
 	}
 
 }

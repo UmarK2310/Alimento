@@ -16,7 +16,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name="Restarants" ,
-		uniqueConstraints = {@UniqueConstraint(columnNames= "rName")			})
+		uniqueConstraints = {@UniqueConstraint(columnNames= "rName")})
 public class Restaurant {
 	
 	@Id
@@ -29,12 +29,11 @@ public class Restaurant {
 	@Column(name="rMobile" , nullable = false)
 	private int rMobileNo;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL,mappedBy="restaurant")
 	private List<Order> orders;
 	
-	@ManyToOne
-	@JoinColumn(name="FoodItemsId",referencedColumnName="fId")
-	private FoodItems foodItems;
+	@OneToMany(mappedBy = "restaurant")
+	private List<FoodItems> foodItems;
 	
 	public Restaurant() {
 		this.rAddress= rAddress;
