@@ -11,6 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 
 
@@ -23,20 +27,53 @@ import javax.persistence.Table;
 		private long id;
 		
 		@Column(name = "first_name", nullable = false)
+		@Size(min=3 , message="firstName must contain atleast 3 characters")
 		private String firstName;
 		
 		@Column(name = "last_name", nullable = false)
 		private String lastName;
 		
-		@Column(name = "email_address", nullable = false)
+		@Column(name = "email_address", nullable = false , unique = true)
+		@Email(message="Email  is not valid!")
 		private String emailId;
 		
 		@Column(name = "address", nullable = false)
 		private String address;
 		
 		@Column(name = "mobile_number", nullable = false)
+		@Size(min=10 ,max=10, message="phoneNumber must contain  10 digits")
 		private String mobilenumber;
 		
+		@Column(name="password",length=20)
+		@Size(min=8, message="Password length must be 8 and contain uppercase,lowercase,digits")
+		@Pattern(regexp="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}")
+		public String password;
+		
+		public String getMobilenumber() {
+			return mobilenumber;
+		}
+
+		public void setMobilenumber(String mobilenumber) {
+			this.mobilenumber = mobilenumber;
+		}
+
+		public String getPassword() {
+			return password;
+		}
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+
+		public List<Order> getOrders() {
+			return orders;
+		}
+
+		public void setOrders(List<Order> orders) {
+			this.orders = orders;
+		}
+
+
 		@OneToMany(fetch = FetchType.EAGER, mappedBy = "customer", cascade = CascadeType.ALL)
 		private List<Order> orders;
 		
