@@ -1,16 +1,21 @@
 package com.foodexpress.alimento.models;
 
+
+
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
 public class FoodItems {
@@ -25,21 +30,23 @@ public class FoodItems {
 	@Column(nullable=false)
 	private float fPrice;
 	
-	private enum fCategory{
-		Veg,
-		NonVeg,
-		Egg
-	}
-	
-	@Column(nullable=false)
-	private String fCategory;
-	
-	@OneToMany
+	@ManyToMany(mappedBy = "foodItems")
 	private List<Order> order;
 	
 	@ManyToOne
 	@JoinColumn(name="Restaurant_ID",referencedColumnName="rId")
 	private Restaurant restaurant;
+	
+	@Enumerated(EnumType.STRING)
+	private FoodItemCategory category;
+
+	public FoodItemCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(FoodItemCategory category) {
+		this.category = category;
+	}
 
 	public int getfId() {
 		return fId;
@@ -73,12 +80,20 @@ public class FoodItems {
 		this.fPrice = fPrice;
 	}
 
-	public String getfCategory() {
-		return fCategory;
+	public List<Order> getOrder() {
+		return order;
 	}
 
-	public void setfCategory(String fCategory) {
-		this.fCategory = fCategory;
+	public void setOrder(List<Order> order) {
+		this.order = order;
 	}
-	
+
+	public Restaurant getRestaurant() {
+		return restaurant;
+	}
+
+	public void setRestaurant(Restaurant restaurant) {
+		this.restaurant = restaurant;
+	}
+
 }

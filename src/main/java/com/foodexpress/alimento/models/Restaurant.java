@@ -23,7 +23,7 @@ public class Restaurant {
 	
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
-	private int rId;
+	private long rId;
 	@Column(name="rName" , nullable = false)
 	@Size(min=3 , message="firstName must contain atleast 3 characters")
 	private String rName;
@@ -36,6 +36,19 @@ public class Restaurant {
 	@Size(min=8, message="Password length must be 8 and contain uppercase,lowercase,digits")
 	@Pattern(regexp="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}")
 	public String rPassword;
+	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy="restaurant")
+	private List<Order> orders;
+	
+	@OneToMany(mappedBy = "restaurant")
+	private List<FoodItems> foodItems;
+	
+	public Restaurant() {
+		this.rAddress= rAddress;
+		this.rId=rId;
+		this.rMobileNo=rMobileNo;
+		this.rName=rName;
+	}
 	
 	public String getrPassword() {
 		return rPassword;
@@ -61,24 +74,11 @@ public class Restaurant {
 		this.foodItems = foodItems;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL,mappedBy="restaurant")
-	private List<Order> orders;
-	
-	@OneToMany(mappedBy = "restaurant")
-	private List<FoodItems> foodItems;
-	
-	public Restaurant() {
-		this.rAddress= rAddress;
-		this.rId=rId;
-		this.rMobileNo=rMobileNo;
-		this.rName=rName;
-	}
-
-	public int getrId() {
+	public long getrId() {
 		return rId;
 	}
 
-	public void setrId(int rId) {
+	public void setrId(long rId) {
 		this.rId = rId;
 	}
 
