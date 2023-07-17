@@ -1,7 +1,13 @@
 package com.foodexpress.alimento.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,27 +27,20 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name= "orders")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Order {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int orderId;
 	
-	@Column(name = "Price")
-    private double price;
-	
-
-	@Column(name = "Quantity")
-	private long quantity;
-	
 	@Column(name = "TotalAmount")
 	private double totalAmount;
 	  
-	@Column(name = "order_status")
-	private String orderStatus;
-	  
 	@Column(name = "payment_status")
-	private String paymentStatus;
+	private String paymentStatus= "paid";
 	  
 	@Column
 	private Date orderDate;
@@ -54,27 +53,13 @@ public class Order {
 	@JoinColumn(name="Restaurant_Id",referencedColumnName = "rId")
 	private Restaurant restaurant;
 	
-	@ManyToMany
-	 @JoinTable(name = "Order_FItems",
-     joinColumns = {
-         @JoinColumn(name = "orderId")
-     },
-     inverseJoinColumns = {
-         @JoinColumn(name = "fid")
-     })
-	private List<FoodItems> foodItems;
+	@OneToMany(mappedBy = "orders")
+	private Set<OrderFoodItems> orderFoodItems ;
+
 	
 	@OneToOne(mappedBy="order",cascade=CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name="payment_ID")
 	private Payment payment;
-
-	
-
-	public Order() {
-		super();
-	}
-	
-
 
 
 	public int getOrderId() {
@@ -82,35 +67,9 @@ public class Order {
 	}
 
 
-
 	public void setOrderId(int orderId) {
 		this.orderId = orderId;
 	}
-
-
-
-	public double getPrice() {
-		return price;
-	}
-
-
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
-
-
-	public long getQuantity() {
-		return quantity;
-	}
-
-
-
-	public void setQuantity(long quantity) {
-		this.quantity = quantity;
-	}
-
 
 
 	public double getTotalAmount() {
@@ -118,23 +77,9 @@ public class Order {
 	}
 
 
-
 	public void setTotalAmount(double totalAmount) {
 		this.totalAmount = totalAmount;
 	}
-
-
-
-	public String getOrderStatus() {
-		return orderStatus;
-	}
-
-
-
-	public void setOrderStatus(String orderStatus) {
-		this.orderStatus = orderStatus;
-	}
-
 
 
 	public String getPaymentStatus() {
@@ -142,11 +87,9 @@ public class Order {
 	}
 
 
-
 	public void setPaymentStatus(String paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
-
 
 
 	public Date getOrderDate() {
@@ -154,11 +97,9 @@ public class Order {
 	}
 
 
-
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
-
 
 
 	public Customer getCustomer() {
@@ -166,11 +107,9 @@ public class Order {
 	}
 
 
-
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-
 
 
 	public Restaurant getRestaurant() {
@@ -178,22 +117,19 @@ public class Order {
 	}
 
 
-
 	public void setRestaurant(Restaurant restaurant) {
 		this.restaurant = restaurant;
 	}
 
 
-
-	public List<FoodItems> getFoodItems() {
-		return foodItems;
+	public Set<OrderFoodItems> getOrderFoodItems() {
+		return orderFoodItems;
 	}
 
 
-	public void setFoodItems(List<FoodItems> foodItems) {
-		this.foodItems = foodItems;
+	public void setOrderFoodItems(Set<OrderFoodItems> orderFoodItems) {
+		this.orderFoodItems = orderFoodItems;
 	}
-
 
 
 	public Payment getPayment() {
@@ -201,33 +137,9 @@ public class Order {
 	}
 
 
-
 	public void setPayment(Payment payment) {
 		this.payment = payment;
 	}
-
-
-
-	public Order(int orderId, double price, long quantity, double totalAmount, String orderStatus,
-			String paymentStatus, Date orderDate, Customer customer, Restaurant restaurant, List<FoodItems> foodItems,
-			Payment payment) {
-		super();
-		this.orderId = orderId;
-		this.price = price;
-		this.quantity = quantity;
-		this.totalAmount = totalAmount;
-		this.orderStatus = orderStatus;
-		this.paymentStatus = paymentStatus;
-		this.orderDate = orderDate;
-		this.customer = customer;
-		this.restaurant = restaurant;
-	//	this.foodItems = foodItems;
-		this.payment = payment;
-	}
-	
-	
-
-	
 	
 	
 

@@ -1,6 +1,9 @@
 package com.foodexpress.alimento.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,31 +21,21 @@ import com.foodexpress.alimento.models.Restaurant;
 import com.foodexpress.alimento.repositories.FoodItemsRepository;
 import com.foodexpress.alimento.services.FoodItemsService;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("api/foodItem")
 public class FoodItemsController {
+	
 	@Autowired
-	private FoodItemsRepository foodItemsRepository;
+	private FoodItemsService foodItemService;
 	
-//	@Autowired
-//	private FoodItemsService foodItemService;
-//	
-	
-	
-	@PostMapping 
+	@PostMapping("/AddFoodItem")
 	public FoodItems saveFoodItems(@RequestParam("fName")
 	String fName , @RequestParam("fPrice") float fPrice,
 	@RequestParam("restaurantId") long restaurantId ,
 	@RequestParam("category") FoodItemCategory category)
 	{
-		FoodItems foodItems = new FoodItems ();
-		foodItems.setCategory(category);
-		foodItems.setfName(fName);
-		foodItems.setfPrice(fPrice);
-		Restaurant restaurant = new Restaurant();
-		restaurant.setrId(restaurantId);
-		foodItems.setRestaurant(restaurant);
-		return foodItemsRepository.save(foodItems);
+		return foodItemService.addFoodItem(restaurantId, fName, fName, fPrice, category);
 		
 	}
 	
@@ -58,17 +51,17 @@ public class FoodItemsController {
 	 
 	 @DeleteMapping("foodItem/{id}")
 	 public void delete(@PathVariable("{fid}")int fId) {
-		// FoodItemService.deleteFoodItem(fId);
+		foodItemService.deleteFoodItem(fId);
 		 System.out.println("Deleted");
 	 }
 	 
 		@GetMapping("foodItem/{fid}")
 		public FoodItems find(@PathVariable("fId") int fId) {
-			return null;//FoodItemService.getFoodItemById(fId);
+			return foodItemService.getFoodItemById(fId);
 }
 		@GetMapping("foodItem/{category}")
-		public FoodItems findByCategory(@PathVariable("category") FoodItemCategory category) {
-			return null;//FoodItemService.getFoodItemB
+		public List<FoodItems> findByCategory(@PathVariable("category") FoodItemCategory category) {
+			return foodItemService.getByCategory(category);
 }
 		
 		

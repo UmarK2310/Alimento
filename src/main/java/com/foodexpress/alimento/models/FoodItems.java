@@ -2,22 +2,20 @@ package com.foodexpress.alimento.models;
 
 
 
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.*;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class FoodItems {
 	
 	@Id
@@ -29,24 +27,19 @@ public class FoodItems {
 	private String fDescription;
 	@Column(nullable=false)
 	private float fPrice;
-	
-	@ManyToMany(mappedBy = "foodItems")
-	private List<Order> order;
+
 	
 	@ManyToOne
 	@JoinColumn(name="Restaurant_ID",referencedColumnName="rId")
 	private Restaurant restaurant;
+
+
 	
 	@Enumerated(EnumType.STRING)
 	private FoodItemCategory category;
 
-	public FoodItemCategory getCategory() {
-		return category;
-	}
-
-	public void setCategory(FoodItemCategory category) {
-		this.category = category;
-	}
+	@OneToMany(mappedBy = "foodItems")
+	private Set<OrderFoodItems> orderFoodItems ;
 
 	public int getfId() {
 		return fId;
@@ -80,14 +73,6 @@ public class FoodItems {
 		this.fPrice = fPrice;
 	}
 
-	public List<Order> getOrder() {
-		return order;
-	}
-
-	public void setOrder(List<Order> order) {
-		this.order = order;
-	}
-
 	public Restaurant getRestaurant() {
 		return restaurant;
 	}
@@ -95,5 +80,48 @@ public class FoodItems {
 	public void setRestaurant(Restaurant restaurant) {
 		this.restaurant = restaurant;
 	}
+
+	public FoodItemCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(FoodItemCategory category) {
+		this.category = category;
+	}
+
+	public Set<OrderFoodItems> getOrderFoodItems() {
+		return orderFoodItems;
+	}
+
+	public void setOrderFoodItems(Set<OrderFoodItems> orderFoodItems) {
+		this.orderFoodItems = orderFoodItems;
+	}
+
+	public FoodItems(int fId, String fName, String fDescription, float fPrice, Restaurant restaurant,
+			FoodItemCategory category, Set<OrderFoodItems> orderFoodItems) {
+		super();
+		this.fId = fId;
+		this.fName = fName;
+		this.fDescription = fDescription;
+		this.fPrice = fPrice;
+		this.restaurant = restaurant;
+		this.category = category;
+		this.orderFoodItems = orderFoodItems;
+	}
+
+	@Override
+	public String toString() {
+		return "FoodItems [fId=" + fId + ", fName=" + fName + ", fDescription=" + fDescription + ", fPrice=" + fPrice
+				+ ", restaurant=" + restaurant + ", category=" + category + ", orderFoodItems=" + orderFoodItems + "]";
+	}
+
+	public FoodItems() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+
+
 
 }

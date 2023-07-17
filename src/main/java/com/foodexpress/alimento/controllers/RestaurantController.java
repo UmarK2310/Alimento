@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.foodexpress.alimento.models.Restaurant;
 import com.foodexpress.alimento.services.RestaurantService;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("api/restaurants")
 public class RestaurantController {
@@ -36,8 +38,8 @@ public class RestaurantController {
 	}
 
     @PostMapping("/login") // login for restaurant
-   public Restaurant login(@Valid @RequestBody Restaurant restaurant) {
-	 return null; //restaurantService.getrestaurantByEmail(restaurant);
+   public Restaurant login(@RequestParam("rId") long rId , @RequestParam("rpassword") String password) {
+	 return restaurantService.loginRestaurant(rId,password); //restaurantService.getrestaurantByEmail(restaurant);
     }
     
 	 @PutMapping("restaurant/{id}")//update restaurant

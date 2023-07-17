@@ -1,6 +1,7 @@
 package com.foodexpress.alimento.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.foodexpress.alimento.models.Order;
 import com.foodexpress.alimento.services.OrderService;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("api/Orders")
 public class OrderController {
@@ -26,11 +28,11 @@ public class OrderController {
 		return null;//orderService.save(orderid);
 	}
 	
-	@PutMapping("{id}")
-	public Order updateOrder(@RequestBody Order order,@RequestParam("orderId")int orderId) {
-		return orderService.updateOrder(order, orderId);
-	}
-	
+//	@PutMapping("{id}")
+//	public Order updateOrder(@RequestBody Order order,@RequestParam("orderId")int orderId) {
+//		return orderService.updateOrder(order, orderId);
+//	}
+//	
 	@GetMapping("{id}")
 	public Order findOrderByID(@PathVariable("orderId")int orderId) {
 		return orderService.getOrderById(orderId);
@@ -46,10 +48,10 @@ public class OrderController {
 //		return orderService.getAllOrders(rId);
 //	}
 	
-	@DeleteMapping("{id}")
-	public void deleteByOrderId(@PathVariable("orderId")int orderId) {
-		orderService.deleteOrder(orderId);
-	}
+//	@DeleteMapping("{id}")
+//	public void deleteByOrderId(@PathVariable("orderId")int orderId) {
+//		orderService.deleteOrder(orderId);
+//	}
 	
 
 }

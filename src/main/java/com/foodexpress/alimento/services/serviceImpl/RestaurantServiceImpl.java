@@ -22,8 +22,7 @@ public class RestaurantServiceImpl implements RestaurantService{
 
 	@Override
 	public Restaurant loginRestaurant(long id, String password) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.restaurantRepo.findRestaurantByRidAndRpassword(id, password);
 	}
 
 	@Override

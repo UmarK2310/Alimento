@@ -34,7 +34,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		
 		@Column(name = "email_address", nullable = false , unique = true)
 		@Email(message="Email  is not valid!")
-		
 		private String emailId;
 		
 		@Column(name = "address", nullable = false)

@@ -3,20 +3,21 @@ package com.foodexpress.alimento.services.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.foodexpress.alimento.models.FoodItemCategory;
 import com.foodexpress.alimento.models.FoodItems;
 import com.foodexpress.alimento.models.Restaurant;
 import com.foodexpress.alimento.repositories.FoodItemsRepository;
 import com.foodexpress.alimento.services.FoodItemsService;
-
+@Service
 public class FoodItemsServiceImpl implements FoodItemsService{
 
 		@Autowired
 		FoodItemsRepository foodItemRepo;
 	
 	@Override
-	public FoodItems addFoodItem(long restaurantId, String foodName, String foodDescription, float foodPrice,
+	public FoodItems addFoodItem(long restaurantId, String fName, String foodDescription, float foodPrice,
 			FoodItemCategory foodCategory) {
 		FoodItems foodItem=new FoodItems();
 		foodItem.setfName(foodItem.getfName());

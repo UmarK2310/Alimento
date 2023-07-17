@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.foodexpress.alimento.models.FoodItemCategory;
 import com.foodexpress.alimento.models.FoodItems;
 
-@Service
 public interface FoodItemsService {
 		
 		FoodItems addFoodItem(long restaurantId,String foodName,String foodDescription,float foodPrice,
